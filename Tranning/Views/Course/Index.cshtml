@@ -1,0 +1,60 @@
+﻿@model Tranning.Models.CourseModel
+
+@{
+    ViewData["Title"] = "Course page";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <h4 class="display-6">
+            List Courses
+        </h4>
+        <a class="btn btn-primary btn-sm" href="@Url.Action("Add","Course")"> Add Course </a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>CATEGORY ID</th>
+                <th>NAME</th>
+                <th>AVATAR</th>
+                <th>DESCRIPTION</th>
+                <th>STATUS</th>
+                <th>START DATE</th>
+                <th>END DATE</th>
+                <th>CREATED AT</th>
+                <th>UPDATED AT</th>
+                <th colspan="2" width="5%">ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CourseDetailLists)
+            {
+                <tr>
+                    <td>@item.id</td>
+                    <td>@item.category_id</td>
+                    <td>@item.name</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.avatar))
+                        {
+                            <img class="img-fluid" src="/uploads/images/@item.avatar" />
+                        }
+                    </td>
+                    <td>@item.description</td>
+                    <td>@item.status</td>
+                    <td>@item.start_date.ToString("yyyy-MM-dd")</td>
+                    <td>@item.end_date?.ToString("yyyy-MM-dd")</td>
+                    <td>@item.created_at?.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>@item.updated_at?.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>
+                        <a class="btn btn-info btn-sm" href="@Url.Action("Update","Course", new { id = @item.id })">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" href="@Url.Action("Delete","Course", new { id = @item.id })">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
